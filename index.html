@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - Наш Магазин Вещей</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?fashion,clothing') no-repeat center center/cover;
+            color: white;
+            padding: 100px 20px;
+        }
+        .hero h2 {
+            font-size: 2.5em;
+        }
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .product-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .catalog-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Наш Магазин Вещей</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Добро пожаловать в наш магазин!</h2>
+            <p>Стильные и качественные вещи по доступным ценам.</p>
+            <a href="catalog.html" class="catalog-button">Перейти в каталог</a>
+        </section>
+
+        <section class="products">
+            <div class="product-card">
+                <img src="https://cdn.27.ua/sc--media--prod/default/09/b1/92/09b1927c-801a-4655-9626-b444736906b3.jpg" alt="Кроссовки">
+                <h3>Кроссовки</h3>
+                <p>2500 грн.</p>
+            </div>
+            <div class="product-card">
+                <img src="https://www.tradeinn.com/f/13839/138399311_6/replay-%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B5-%D0%B4%D0%B6%D0%B8%D0%BD%D1%81%D1%8B-ma981q.000.549.234.webp" alt="Джинсы">
+                <h3>Джинсы</h3>
+                <p>1500 грн.</p>
+            </div>
+            <div class="product-card">
+                <img src="https://ido.in.ua/17719/kurtka-dlya-malchika-ido-demisezonnaya-uteplennaya-s-kapyushonom-43341.jpg" alt="Куртка">
+                <h3>Куртка</h3>
+                <p>3000 грн.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>

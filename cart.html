@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartContainer = document.getElementById("cart-items");
+            let totalContainer = document.getElementById("total-price");
+            cartContainer.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = "<p>Ваша корзина пуста.</p>";
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    let cartItem = document.createElement("div");
+                    cartItem.classList.add("cart-item");
+                    cartItem.innerHTML = `
+                        <p class="cart-item-name">${item.name} - ${item.price} грн.</p>
+                        <button onclick="removeFromCart(${index})">Удалить</button>
+                    `;
+                    cartContainer.appendChild(cartItem);
+                });
+            }
+
+            totalContainer.innerText = `Общая сумма: ${total} грн.`;
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function clearCart() {
+            localStorage.removeItem("cart");
+            loadCart();
+        }
+
+        document.addEventListener("DOMContentLoaded", loadCart);
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            padding-top: 80px; /* Отступ сверху, чтобы не залазило под header */
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item-name {
+            font-size: 20px; /* Увеличенный размер шрифта для названия товара */
+            font-weight: bold;
+        }
+
+        .cart-item button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .cart-item button:hover {
+            background-color: darkred;
+        }
+
+        #clear-cart {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+        }
+
+        #clear-cart:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Корзина</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Ваши товары</h2>
+        <div id="cart-items"></div>
+        <h3 id="total-price">Общая сумма: 0 грн.</h3>
+        <button id="clear-cart" onclick="clearCart()">Очистить корзину</button>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

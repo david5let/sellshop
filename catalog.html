@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function addToCart(productName, price) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push({ name: productName, price: price });
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(productName + " добавлен в корзину!");
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Наш Магазин Вещей</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="catalog">
+            <h2>Наш каталог</h2>
+            <div class="product-grid">
+                <div class="product">
+                    <img src="https://www.tradeinn.com/f/13839/138399311_6/replay-%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B5-%D0%B4%D0%B6%D0%B8%D0%BD%D1%81%D1%8B-ma981q.000.549.234.webp" alt="Джинсы" width="200" height="250">
+                    <h3>Джинсы</h3>
+                    <p>Стильные и удобные джинсы.</p>
+                    <span class="price">1500 грн.</span>
+                    <button onclick="addToCart('Джинсы', 1500)">Добавить в корзину</button>
+                </div>
+                <div class="product">
+                    <img src="https://cdn.27.ua/sc--media--prod/default/09/b1/92/09b1927c-801a-4655-9626-b444736906b3.jpg" alt="Кроссовки" width="200" height="200">
+                    <h3>Кроссовки</h3>
+                    <p>Современные кроссовки для активного отдыха.</p>
+                    <span class="price">2500 грн.</span>
+                    <button onclick="addToCart('Кроссовки', 2500)">Добавить в корзину</button>
+                </div>
+                <div class="product">
+                    <img src="https://ido.in.ua/17719/kurtka-dlya-malchika-ido-demisezonnaya-uteplennaya-s-kapyushonom-43341.jpg" alt="Куртка" width="200" height="200">
+                    <h3>Куртка</h3>
+                    <p>Теплая куртка для холодной погоды.</p>
+                    <span class="price">3000 грн.</span>
+                    <button onclick="addToCart('Куртка', 3000)">Добавить в корзину</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>
