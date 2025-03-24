@@ -5,96 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-        function loadCart() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            let cartContainer = document.getElementById("cart-items");
-            let totalContainer = document.getElementById("total-price");
-            cartContainer.innerHTML = "";
-            let total = 0;
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = "<p>Ваша корзина пуста.</p>";
-            } else {
-                cart.forEach((item, index) => {
-                    total += item.price;
-                    let cartItem = document.createElement("div");
-                    cartItem.classList.add("cart-item");
-                    cartItem.innerHTML = `
-                        <p class="cart-item-name">${item.name} - ${item.price} грн.</p>
-                        <button onclick="removeFromCart(${index})">Удалить</button>
-                    `;
-                    cartContainer.appendChild(cartItem);
-                });
-            }
-
-            totalContainer.innerText = `Общая сумма: ${total} грн.`;
-        }
-
-        function removeFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
-        }
-
-        function clearCart() {
-            localStorage.removeItem("cart");
-            loadCart();
-        }
-
-        document.addEventListener("DOMContentLoaded", loadCart);
-    </script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        main {
-            padding-top: 80px; /* Отступ сверху, чтобы не залазило под header */
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .cart-item-name {
-            font-size: 20px; /* Увеличенный размер шрифта для названия товара */
-            font-weight: bold;
-        }
-
-        .cart-item button {
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .cart-item button:hover {
-            background-color: darkred;
-        }
-
-        #clear-cart {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #ff9800;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: block;
-        }
-
-        #clear-cart:hover {
-            background-color: #e68900;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -103,22 +13,300 @@
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html">О нас</a></li>
                 <li><a href="cart.html">Корзина</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <h2>Ваши товары</h2>
-        <div id="cart-items"></div>
-        <h3 id="total-price">Общая сумма: 0 грн.</h3>
-        <button id="clear-cart" onclick="clearCart()">Очистить корзину</button>
+    <main style="margin-top: 140px;">
+        <section class="cart">
+            <h2>Ваши товары</h2>
+            <div id="cart-items"></div>
+            <p class="total">Итого: <span id="total-price"></span> грн.</p>
+            <button class="checkout-btn" id="checkout-btn">Оформить заказ</button>
+        </section>
+
+        <section class="order-form hidden" id="order-form">
+            <form class="form">
+                <label for="name" class="label">
+                    <span class="title">ФИО</span>
+                    <input class="input-field" type="text" name="name" placeholder="Введите ваше ФИО" required />
+                </label>
+                <label for="email" class="label">
+                    <span class="title">Email</span>
+                    <input class="input-field" type="email" name="email" placeholder="Введите ваш email" required />
+                </label>
+                <label for="phone" class="label">
+                    <span class="title">Телефон</span>
+                    <input class="input-field" type="tel" name="phone" placeholder="Введите ваш телефон" required />
+                </label>
+                <input class="checkout-btn" type="button" value="Подтвердить заказ" id="confirm-order" />
+            </form>
+        </section>
+
+        <section class="add-card page hidden" id="card-form">
+            <form class="form">
+                <label for="name" class="label">
+                    <span class="title">Card holder full name</span>
+                    <input class="input-field" type="text" name="input-name" placeholder="Enter your full name" required />
+                </label>
+                <label for="serialCardNumber" class="label">
+                    <span class="title">Card Number</span>
+                    <input id="serialCardNumber" class="input-field" type="number" placeholder="0000 0000 0000 0000" required />
+                </label>
+                <div class="split">
+                    <label for="ExDate" class="label">
+                        <span class="title">Expiry Date</span>
+                        <input id="ExDate" class="input-field" type="text" placeholder="01/23" required />
+                    </label>
+                    <label for="cvv" class="label">
+                        <span class="title"> CVV</span>
+                        <input id="cvv" class="input-field" type="number" placeholder="CVV" required />
+                    </label>
+                </div>
+                <input class="checkout-btn" type="button" value="Подтвердить оплату" id="confirm-payment" />
+            </form>
+        </section>
+
+        <section id="successMessage" style="display: none; margin-top: 40px;">
+            <h2>Успешная оплата, мы с вами свяжемся!</h2>
+            <p>Спасибо за заказ!</p>
+        </section>
     </main>
 
-    <footer>
+    <button class="theme__icon" id="theme-toggle-icon">
+        <span class="sun-icon">&#9728;</span>
+        <span class="moon-icon">&#127769;</span>
+    </button>
 
-    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            const totalPriceElement = document.getElementById("total-price");
+            const checkoutBtn = document.getElementById("checkout-btn");
+            const orderForm = document.getElementById("order-form");
+            const cardForm = document.getElementById("card-form");
+            const successMessage = document.getElementById("successMessage");
+
+            const shippingPrice = 0;
+
+            function updateCart() {
+                cartItemsContainer.innerHTML = "";
+                let totalPrice = 0;
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = "<p>Корзина пуста.</p>";
+                    totalPriceElement.textContent = "0";
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const itemPrice = parseFloat(item.price) || 0;
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("cart-item");
+                    itemElement.innerHTML = ` 
+                        <p>${item.name} - ${itemPrice.toFixed(2)} грн.</p>
+                        <button class="remove-btn" data-index="${index}">Удалить</button>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                    totalPrice += itemPrice;
+                });
+
+                totalPrice += (totalPrice > 0 ? shippingPrice : 0);
+                totalPriceElement.textContent = totalPrice.toFixed(2);
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
+
+            cartItemsContainer.addEventListener("click", function (event) {
+                if (event.target.classList.contains("remove-btn")) {
+                    const index = event.target.getAttribute("data-index");
+                    cart.splice(index, 1);
+                    updateCart();
+                }
+            });
+
+            checkoutBtn.addEventListener("click", function () {
+                document.querySelector(".cart").classList.add("hidden");
+                orderForm.classList.remove("hidden");
+            });
+
+            document.getElementById('confirm-order').addEventListener('click', function() {
+                orderForm.style.display = 'none';
+                cardForm.style.display = 'block';
+            });
+
+            document.getElementById('confirm-payment').addEventListener('click', function() {
+                cardForm.style.display = 'none';
+                successMessage.style.display = 'block';
+            });
+
+            const themeToggleIcon = document.getElementById("theme-toggle-icon");
+            themeToggleIcon.addEventListener("click", function () {
+                document.body.classList.toggle("dark-theme");
+                document.body.classList.toggle("light-theme");
+                localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+            });
+
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-theme");
+                document.body.classList.remove("light-theme");
+            } else {
+                document.body.classList.add("light-theme");
+                document.body.classList.remove("dark-theme");
+            }
+
+            updateCart();
+        });
+    </script>
+
+    <style>
+   
+        .hidden { display: none; }
+
+        .checkout-btn {
+            background-color: #6d28d9;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #4c1d95;
+        }
+
+        .form {
+            background: #1a1a1a; 
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            position: relative;
+            border-radius: 25px;
+            margin: 0 auto;
+        }
+
+        .form .label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form .title {
+            font-size: 12px;
+            color: #8b8e98;
+            font-weight: 600;
+        }
+
+        .form .input-field {
+            width: 100%;
+            height: 50px;
+            text-indent: 15px;
+            border-radius: 15px;
+            outline: none;
+            background-color: transparent;
+            border: 1px solid #21262e;
+            transition: all 0.3s;
+            color: #aeaeae;
+        }
+
+        .form .input-field:focus {
+            border-color: #d17842;
+        }
+
+        .form .checkout-btn {
+            margin-top: 20px;
+            padding: 20px 0;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff;
+            background: #d17842;
+            border: 2px solid transparent;
+            transition: all 200ms;
+        }
+
+        .form .checkout-btn:hover {
+            color: #d17842;
+            border: 2px solid #d17842;
+            background: transparent;
+        }
+
+        .theme__icon {
+            width: 40px;
+            height: 40px;
+            padding: 8px;
+            overflow: hidden;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .theme__icon > :nth-child(1) {
+            width: 18px;
+            height: 18px;
+            border-radius: 24px;
+            border: 1px solid #212121;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(255, 204, 0);
+            transition: width .4s, height .4s, border .4s, background-color .4s;
+            z-index: 10;
+        }
+
+        .theme__icon:hover > :nth-child(1) {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgb(245, 245, 247);
+            background-color: rgb(245, 245, 247);
+        }
+
+        .theme__icon > :nth-child(2) {
+            width: 28px;
+            height: 28px;
+            border-radius: 24px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform .4s;
+        }
+
+        .theme__icon:hover > :nth-child(2) {
+            transform: translate(-50%, -50%) rotate(-45deg) scale(.8);
+        }
+
+        .theme__icon > :nth-child(3) {
+            width: 24px;
+            height: 24px;
+            border-radius: 24px;
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            background-color: #212121;
+            transition: top .4s, left .4s;
+            transition-delay: .2s;
+            z-index: 20;
+        }
+
+        .theme__icon:hover > :nth-child(3) {
+            top: 35%;
+            left: 40%;
+        }
+    </style>
 </body>
 </html>

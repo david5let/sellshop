@@ -3,61 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог товаров</title>
+    <title>Каталог</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-        function addToCart(productName, price) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.push({ name: productName, price: price });
-            localStorage.setItem("cart", JSON.stringify(cart));
-            alert(productName + " добавлен в корзину!");
+    <style>
+        .dark-mode {
+            background-color: #121212;
+            color: white;
         }
-    </script>
+
+        .dark-mode header {
+            background-color: #1e1e1e;
+        }
+
+        .dark-mode nav ul li a {
+            color: orange;
+        }
+
+        .dark-mode nav ul li a:hover {
+            color: #fff;
+        }
+
+        .dark-mode section {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .dark-mode .product-card {
+            background-color: #222;
+            color: white;
+        }
+
+        .dark-mode .product-card h2, 
+        .dark-mode .product-card p, 
+        .dark-mode .product-card .price {
+            color: white;
+        }
+
+        .theme__icon {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background-color: #ff9800;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .theme__icon:hover {
+            background-color: #e68900;
+            transform: scale(1.1);
+        }
+
+        body.dark-theme .theme__icon {
+            background-color: #673ab7;
+        }
+
+        body.dark-theme .theme__icon:hover {
+            background-color: #5a2ea7;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Наш Магазин Вещей</h1>
+        <h1>Каталог товаров</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html">О нас</a></li>
                 <li><a href="cart.html">Корзина</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
             </ul>
         </nav>
     </header>
-
+    
     <main>
-        <section class="catalog">
-            <h2>Наш каталог</h2>
-            <div class="product-grid">
-                <div class="product">
-                    <img src="https://www.tradeinn.com/f/13839/138399311_6/replay-%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B5-%D0%B4%D0%B6%D0%B8%D0%BD%D1%81%D1%8B-ma981q.000.549.234.webp" alt="Джинсы" width="200" height="250">
-                    <h3>Джинсы</h3>
-                    <p>Стильные и удобные джинсы.</p>
-                    <span class="price">1500 грн.</span>
-                    <button onclick="addToCart('Джинсы', 1500)">Добавить в корзину</button>
-                </div>
-                <div class="product">
-                    <img src="https://cdn.27.ua/sc--media--prod/default/09/b1/92/09b1927c-801a-4655-9626-b444736906b3.jpg" alt="Кроссовки" width="200" height="200">
-                    <h3>Кроссовки</h3>
-                    <p>Современные кроссовки для активного отдыха.</p>
-                    <span class="price">2500 грн.</span>
-                    <button onclick="addToCart('Кроссовки', 2500)">Добавить в корзину</button>
-                </div>
-                <div class="product">
-                    <img src="https://ido.in.ua/17719/kurtka-dlya-malchika-ido-demisezonnaya-uteplennaya-s-kapyushonom-43341.jpg" alt="Куртка" width="200" height="200">
-                    <h3>Куртка</h3>
-                    <p>Теплая куртка для холодной погоды.</p>
-                    <span class="price">3000 грн.</span>
-                    <button onclick="addToCart('Куртка', 3000)">Добавить в корзину</button>
-                </div>
+        <section class="catalog-container">
+            <div class="product-card" data-id="1" data-name="Футболка" data-price="1600" data-image="https://media2.symbol.ua/aio-images/12/75/12754b08d248b2979c5bac65e5367e4c/395ca14a-eddc-45cd-be5f-b209bded83db.jpg">
+                <img src="https://media2.symbol.ua/aio-images/12/75/12754b08d248b2979c5bac65e5367e4c/395ca14a-eddc-45cd-be5f-b209bded83db.jpg" alt="Футболка" style="width: 200px; height: auto;">
+                <h2>Футболка</h2>
+                <p>Стильная футболка из качественного материала.</p>
+                <p class="price">Цена: 1600 грн.</p>
+                <button class="add-to-cart">+ Добавить в корзину</button>
+            </div>
+            <div class="product-card" data-id="2" data-name="Джинсы" data-price="2600" data-image="https://charisma.ua/image/cache/catalog/SWDD22H2935STBL/IMG_7140%20copy-1100x1400.jpg">
+                <img src="https://charisma.ua/image/cache/catalog/SWDD22H2935STBL/IMG_7140%20copy-1100x1400.jpg" alt="Джинсы" style="width: 200px; height: auto;">
+                <h2>Джинсы</h2>
+                <p>Модные джинсы с удобной посадкой.</p>
+                <p class="price">Цена: 2600 грн.</p>
+                <button class="add-to-cart">+ Добавить в корзину</button>
+            </div>
+            <div class="product-card" data-id="3" data-name="Куртка" data-price="5100" data-image="https://reima.ua/thumbs/700x1000/storage/catalog/5100347A-9990/5100347A-9990_front.jpg">
+                <img src="https://reima.ua/thumbs/700x1000/storage/catalog/5100347A-9990/5100347A-9990_front.jpg" alt="Куртка" style="width: 200px; height: auto;">
+                <h2>Куртка</h2>
+                <p>Теплая и стильная куртка.</p>
+                <p class="price">Цена: 5100 грн.</p>
+                <button class="add-to-cart">+ Добавить в корзину</button>
             </div>
         </section>
     </main>
 
-    <footer>
-    </footer>
+    <button class="theme__icon" id="theme-toggle-icon">🌙</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const themeToggleIcon = document.getElementById("theme-toggle-icon");
+
+            function updateIcon() {
+                themeToggleIcon.textContent = document.body.classList.contains("dark-theme") ? "☀" : "🌙";
+            }
+
+            themeToggleIcon.addEventListener("click", () => {
+                document.body.classList.toggle("dark-theme");
+                localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+                updateIcon();
+            });
+
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-theme");
+                updateIcon();
+            }
+
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    let product = this.closest('.product-card');
+                    let item = {
+                        id: product.dataset.id,
+                        name: product.dataset.name,
+                        price: product.dataset.price,
+                        image: product.dataset.image
+                    };
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    cart.push(item);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert('Товар добавлен в корзину!');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

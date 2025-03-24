@@ -3,91 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная - Наш Магазин Вещей</title>
+    <title>Главная страница</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #fff; 
+            color: #000; 
             font-family: Arial, sans-serif;
-            text-align: center;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+
+        header {
             background-color: #f4f4f4;
-        }
-        .hero {
-            background: url('https://source.unsplash.com/1600x900/?fashion,clothing') no-repeat center center/cover;
-            color: white;
-            padding: 100px 20px;
-        }
-        .hero h2 {
-            font-size: 2.5em;
-        }
-        .products {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
             padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
         }
-        .product-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        body.dark-mode header {
+            background-color: #1e1e1e;
         }
-        .product-card img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
+
+        nav ul {
+            list-style: none;
+            padding: 0;
         }
-        .catalog-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #ff9800;
-            color: white;
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
             text-decoration: none;
-            border-radius: 5px;
+            color: black;
+        }
+
+        body.dark-mode nav ul li a {
+            color: orange;
+        }
+
+        body.dark-mode nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        main {
+            margin-top: 120px;
+            text-align: center;
+        }
+
+        .theme__icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #6d28d9;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transform: rotate(90deg); 
+            font-size: 20px; 
+        }
+
+        body.light-mode .sun-icon {
+            display: inline-block;
+        }
+
+        body.dark-mode .sun-icon {
+            display: none;
+        }
+
+        body.dark-mode .moon-icon {
+            display: inline-block;
+        }
+
+        body.light-mode .moon-icon {
+            display: none;
+        }
+
+        .description {
+            margin-top: 30px;
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+
+        .description h2 {
+            font-size: 2em;
+            color: #6d28d9;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Наш Магазин Вещей</h1>
+        <h1>Добро пожаловать в наш магазин!</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html">О нас</a></li>
                 <li><a href="cart.html">Корзина</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
             </ul>
         </nav>
     </header>
-
+    
     <main>
-        <section class="hero">
-            <h2>Добро пожаловать в наш магазин!</h2>
-            <p>Стильные и качественные вещи по доступным ценам.</p>
-            <a href="catalog.html" class="catalog-button">Перейти в каталог</a>
-        </section>
-
-        <section class="products">
-            <div class="product-card">
-                <img src="https://cdn.27.ua/sc--media--prod/default/09/b1/92/09b1927c-801a-4655-9626-b444736906b3.jpg" alt="Кроссовки">
-                <h3>Кроссовки</h3>
-                <p>2500 грн.</p>
-            </div>
-            <div class="product-card">
-                <img src="https://www.tradeinn.com/f/13839/138399311_6/replay-%D0%9A%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B5-%D0%B4%D0%B6%D0%B8%D0%BD%D1%81%D1%8B-ma981q.000.549.234.webp" alt="Джинсы">
-                <h3>Джинсы</h3>
-                <p>1500 грн.</p>
-            </div>
-            <div class="product-card">
-                <img src="https://ido.in.ua/17719/kurtka-dlya-malchika-ido-demisezonnaya-uteplennaya-s-kapyushonom-43341.jpg" alt="Куртка">
-                <h3>Куртка</h3>
-                <p>3000 грн.</p>
-            </div>
+        <section class="description">
+            <h2>О нашем магазине</h2>
+            <p>Мы — интернет-магазин, который предлагает вам стильную и качественную одежду. Мы гордимся тем, что наш ассортимент включает только лучшие товары, которые соответствуют последним трендам. Мы уделяем внимание каждому клиенту, обеспечиваем быструю доставку и приятные условия для покупок.</p>
+            <p>В нашем каталоге вы найдёте как базовые вещи для повседневного гардероба, так и уникальные модные новинки, которые подойдут для особых случаев. Мы уверены, что каждый найдет у нас то, что ему нужно!</p>
         </section>
     </main>
+    
+ 
+    <button class="theme__icon">
+        <span class="sun-icon">&#9728;</span>
+        <span class="moon-icon">&#127769;</span>
+    </button>
 
-    <footer>
-    </footer>
+    <script>
+        const themeToggleBtn = document.querySelector('.theme__icon');
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+        });
+
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+            document.body.classList.remove("light-mode");
+        } else {
+            document.body.classList.add("light-mode");
+            document.body.classList.remove("dark-mode");
+        }
+    </script>
 </body>
 </html>
