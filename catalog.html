@@ -6,37 +6,73 @@
     <title>Каталог</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .dark-mode {
+       
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #fff;
+            color: #000;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
             background-color: #121212;
             color: white;
         }
 
-        .dark-mode header {
+        header {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-mode header {
             background-color: #1e1e1e;
         }
 
-        .dark-mode nav ul li a {
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        body.dark-mode nav ul li a {
             color: orange;
         }
 
-        .dark-mode nav ul li a:hover {
-            color: #fff;
+        body.dark-mode nav ul li a:hover {
+            color: #ffcc00;
         }
 
-        .dark-mode section {
-            background-color: #1a1a1a;
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: #fff;
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
         }
 
-        .dark-mode .product-card {
-            background-color: #222;
-            color: white;
-        }
-
-        .dark-mode .product-card h2, 
-        .dark-mode .product-card p, 
-        .dark-mode .product-card .price {
+        body.dark-mode .product-card {
+            background: #222;
             color: white;
         }
 
@@ -64,14 +100,6 @@
             background-color: #e68900;
             transform: scale(1.1);
         }
-
-        body.dark-theme .theme__icon {
-            background-color: #673ab7;
-        }
-
-        body.dark-theme .theme__icon:hover {
-            background-color: #5a2ea7;
-        }
     </style>
 </head>
 <body>
@@ -88,21 +116,21 @@
     
     <main>
         <section class="catalog-container">
-            <div class="product-card" data-id="1" data-name="Футболка" data-price="1600" data-image="https://media2.symbol.ua/aio-images/12/75/12754b08d248b2979c5bac65e5367e4c/395ca14a-eddc-45cd-be5f-b209bded83db.jpg">
+            <div class="product-card" data-id="1" data-name="Футболка" data-price="1600">
                 <img src="https://media2.symbol.ua/aio-images/12/75/12754b08d248b2979c5bac65e5367e4c/395ca14a-eddc-45cd-be5f-b209bded83db.jpg" alt="Футболка" style="width: 200px; height: auto;">
                 <h2>Футболка</h2>
                 <p>Стильная футболка из качественного материала.</p>
                 <p class="price">Цена: 1600 грн.</p>
                 <button class="add-to-cart">+ Добавить в корзину</button>
             </div>
-            <div class="product-card" data-id="2" data-name="Джинсы" data-price="2600" data-image="https://charisma.ua/image/cache/catalog/SWDD22H2935STBL/IMG_7140%20copy-1100x1400.jpg">
+            <div class="product-card" data-id="2" data-name="Джинсы" data-price="2600">
                 <img src="https://charisma.ua/image/cache/catalog/SWDD22H2935STBL/IMG_7140%20copy-1100x1400.jpg" alt="Джинсы" style="width: 200px; height: auto;">
                 <h2>Джинсы</h2>
                 <p>Модные джинсы с удобной посадкой.</p>
                 <p class="price">Цена: 2600 грн.</p>
                 <button class="add-to-cart">+ Добавить в корзину</button>
             </div>
-            <div class="product-card" data-id="3" data-name="Куртка" data-price="5100" data-image="https://reima.ua/thumbs/700x1000/storage/catalog/5100347A-9990/5100347A-9990_front.jpg">
+            <div class="product-card" data-id="3" data-name="Куртка" data-price="5100">
                 <img src="https://reima.ua/thumbs/700x1000/storage/catalog/5100347A-9990/5100347A-9990_front.jpg" alt="Куртка" style="width: 200px; height: auto;">
                 <h2>Куртка</h2>
                 <p>Теплая и стильная куртка.</p>
@@ -113,39 +141,53 @@
     </main>
 
     <button class="theme__icon" id="theme-toggle-icon">🌙</button>
-    
+
     <script>
+        
         document.addEventListener("DOMContentLoaded", () => {
             const themeToggleIcon = document.getElementById("theme-toggle-icon");
 
             function updateIcon() {
-                themeToggleIcon.textContent = document.body.classList.contains("dark-theme") ? "☀" : "🌙";
+                themeToggleIcon.textContent = document.body.classList.contains("dark-mode") ? "☀" : "🌙";
             }
 
             themeToggleIcon.addEventListener("click", () => {
-                document.body.classList.toggle("dark-theme");
-                localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+                document.body.classList.toggle("dark-mode");
+                localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
                 updateIcon();
             });
 
             if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("dark-theme");
+                document.body.classList.add("dark-mode");
                 updateIcon();
             }
 
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function() {
-                    let product = this.closest('.product-card');
-                    let item = {
-                        id: product.dataset.id,
-                        name: product.dataset.name,
-                        price: product.dataset.price,
-                        image: product.dataset.image
+           
+            const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const productCard = this.closest(".product-card");
+                    const productId = productCard.getAttribute("data-id");
+                    const productName = productCard.getAttribute("data-name");
+                    const productPrice = productCard.getAttribute("data-price");
+
+                    const product = {
+                        id: productId,
+                        name: productName,
+                        price: productPrice
                     };
-                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                    cart.push(item);
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    alert('Товар добавлен в корзину!');
+
+                  
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                  
+                    cart.push(product);
+
+                  
+                    localStorage.setItem("cart", JSON.stringify(cart));
+
+                    alert(`${productName} добавлен в корзину!`);
                 });
             });
         });

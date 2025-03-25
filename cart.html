@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <h1>Корзина</h1>
@@ -48,11 +50,13 @@
             <form class="form">
                 <label for="name" class="label">
                     <span class="title">Card holder full name</span>
-                    <input class="input-field" type="text" name="input-name" placeholder="Enter your full name" required />
+                    <input class="input-field" type="text" name="input-name" placeholder="Enter your full name"
+                        required />
                 </label>
                 <label for="serialCardNumber" class="label">
                     <span class="title">Card Number</span>
-                    <input id="serialCardNumber" class="input-field" type="number" placeholder="0000 0000 0000 0000" required />
+                    <input id="serialCardNumber" class="input-field" type="number" placeholder="0000 0000 0000 0000"
+                        required />
                 </label>
                 <div class="split">
                     <label for="ExDate" class="label">
@@ -71,27 +75,19 @@
         <section id="successMessage" style="display: none; margin-top: 40px;">
             <h2>Успешная оплата, мы с вами свяжемся!</h2>
             <p>Спасибо за заказ!</p>
+            <button class="checkout-btn" id="clear-cart-btn">Вернуться в каталог</button>
         </section>
     </main>
 
-    <button class="theme__icon" id="theme-toggle-icon">
-        <span class="sun-icon">&#9728;</span>
-        <span class="moon-icon">&#127769;</span>
-    </button>
+    <button class="theme__icon" id="theme-toggle-icon">🌙</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartItemsContainer = document.getElementById("cart-items");
-            const totalPriceElement = document.getElementById("total-price");
-            const checkoutBtn = document.getElementById("checkout-btn");
-            const orderForm = document.getElementById("order-form");
-            const cardForm = document.getElementById("card-form");
-            const successMessage = document.getElementById("successMessage");
-
-            const shippingPrice = 0;
-
             function updateCart() {
+                const cartItemsContainer = document.getElementById("cart-items");
+                const totalPriceElement = document.getElementById("total-price");
+
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
                 cartItemsContainer.innerHTML = "";
                 let totalPrice = 0;
 
@@ -101,68 +97,97 @@
                     return;
                 }
 
+                
                 cart.forEach((item, index) => {
-                    const itemPrice = parseFloat(item.price) || 0;
                     const itemElement = document.createElement("div");
                     itemElement.classList.add("cart-item");
-                    itemElement.innerHTML = ` 
-                        <p>${item.name} - ${itemPrice.toFixed(2)} грн.</p>
+                    itemElement.innerHTML = `
+                        <p>${item.name} - ${item.price} грн.</p>
                         <button class="remove-btn" data-index="${index}">Удалить</button>
                     `;
                     cartItemsContainer.appendChild(itemElement);
-                    totalPrice += itemPrice;
+                    totalPrice += parseFloat(item.price);
                 });
 
-                totalPrice += (totalPrice > 0 ? shippingPrice : 0);
                 totalPriceElement.textContent = totalPrice.toFixed(2);
-                localStorage.setItem("cart", JSON.stringify(cart));
             }
 
-            cartItemsContainer.addEventListener("click", function (event) {
+            
+            document.addEventListener("click", function (event) {
                 if (event.target.classList.contains("remove-btn")) {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
                     const index = event.target.getAttribute("data-index");
-                    cart.splice(index, 1);
-                    updateCart();
+                    cart.splice(index, 1); 
+                    localStorage.setItem("cart", JSON.stringify(cart)); 
+                    updateCart(); 
                 }
             });
 
+           
+            const checkoutBtn = document.getElementById("checkout-btn");
+            const orderForm = document.getElementById("order-form");
+            const cartSection = document.querySelector(".cart");
+
             checkoutBtn.addEventListener("click", function () {
-                document.querySelector(".cart").classList.add("hidden");
-                orderForm.classList.remove("hidden");
+                if (cartSection) cartSection.classList.add("hidden");
+                if (orderForm) orderForm.classList.remove("hidden");
             });
 
-            document.getElementById('confirm-order').addEventListener('click', function() {
-                orderForm.style.display = 'none';
-                cardForm.style.display = 'block';
+            
+            const confirmOrderBtn = document.getElementById("confirm-order");
+
+            confirmOrderBtn.addEventListener("click", function () {
+               
+                const name = document.querySelector("input[name='name']").value;
+                const email = document.querySelector("input[name='email']").value;
+                const phone = document.querySelector("input[name='phone']").value;
+
+                if (name && email && phone) {
+                 
+                    document.getElementById("order-form").classList.add("hidden");
+                    document.getElementById("successMessage").style.display = "block";
+                } else {
+                    alert("Пожалуйста, заполните все поля формы.");
+                }
             });
 
-            document.getElementById('confirm-payment').addEventListener('click', function() {
-                cardForm.style.display = 'none';
-                successMessage.style.display = 'block';
+          
+            const clearCartBtn = document.getElementById("clear-cart-btn");
+
+            clearCartBtn.addEventListener("click", function () {
+                
+                localStorage.removeItem("cart");
+
+                
+                window.location.href = "catalog.html";
             });
 
+           
+            updateCart();
+
+         
             const themeToggleIcon = document.getElementById("theme-toggle-icon");
-            themeToggleIcon.addEventListener("click", function () {
-                document.body.classList.toggle("dark-theme");
-                document.body.classList.toggle("light-theme");
-                localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
-            });
-
-            if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("dark-theme");
-                document.body.classList.remove("light-theme");
-            } else {
-                document.body.classList.add("light-theme");
-                document.body.classList.remove("dark-theme");
+            function updateIcon() {
+                themeToggleIcon.textContent = document.body.classList.contains("dark-theme") ? "☀" : "🌙";
             }
 
-            updateCart();
+            themeToggleIcon.addEventListener("click", () => {
+                document.body.classList.toggle("dark-theme");
+                localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark-theme" : "light");
+                updateIcon();
+            });
+
+            if (localStorage.getItem("theme") === "dark-theme") {
+                document.body.classList.add("dark-theme");
+            }
+            updateIcon();
         });
     </script>
 
     <style>
-   
-        .hidden { display: none; }
+        .hidden {
+            display: none;
+        }
 
         .checkout-btn {
             background-color: #6d28d9;
@@ -181,7 +206,7 @@
         }
 
         .form {
-            background: #1a1a1a; 
+            background: #1a1a1a;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
             width: 320px;
             display: flex;
@@ -212,7 +237,7 @@
             border-radius: 15px;
             outline: none;
             background-color: transparent;
-            border: 1px solid #21262e;
+            border: 1px solid #000000;
             transition: all 0.3s;
             color: #aeaeae;
         }
@@ -241,72 +266,38 @@
         }
 
         .theme__icon {
-            width: 40px;
-            height: 40px;
-            padding: 8px;
-            overflow: hidden;
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: transparent;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background-color: #e68900;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
             cursor: pointer;
-            z-index: 1000;
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .theme__icon > :nth-child(1) {
-            width: 18px;
-            height: 18px;
-            border-radius: 24px;
-            border: 1px solid #212121;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgb(255, 204, 0);
-            transition: width .4s, height .4s, border .4s, background-color .4s;
-            z-index: 10;
+        .theme__icon:hover {
+            background-color: #e68900;
+            transform: scale(1.1);
         }
 
-        .theme__icon:hover > :nth-child(1) {
-            width: 30px;
-            height: 30px;
-            border: 1px solid rgb(245, 245, 247);
-            background-color: rgb(245, 245, 247);
+        body.dark-theme .theme__icon {
+            background-color: #000000;
         }
 
-        .theme__icon > :nth-child(2) {
-            width: 28px;
-            height: 28px;
-            border-radius: 24px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform .4s;
-        }
-
-        .theme__icon:hover > :nth-child(2) {
-            transform: translate(-50%, -50%) rotate(-45deg) scale(.8);
-        }
-
-        .theme__icon > :nth-child(3) {
-            width: 24px;
-            height: 24px;
-            border-radius: 24px;
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            transform: translateY(-50%);
-            background-color: #212121;
-            transition: top .4s, left .4s;
-            transition-delay: .2s;
-            z-index: 20;
-        }
-
-        .theme__icon:hover > :nth-child(3) {
-            top: 35%;
-            left: 40%;
+        body.dark-theme .theme__icon:hover {
+            background-color: #000000;
         }
     </style>
 </body>
+
 </html>

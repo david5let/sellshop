@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,8 @@
     <style>
         body {
             transition: background-color 0.3s ease, color 0.3s ease;
-            background-color: #fff; 
-            color: #000; 
+            background-color: #fff;
+            color: #000;
             font-family: Arial, sans-serif;
             line-height: 1.6;
         }
@@ -60,52 +61,34 @@
 
         .theme__icon {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            background-color: #6d28d9;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background-color: #ff9800;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: none;
             cursor: pointer;
             border-radius: 50%;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transform: rotate(90deg); 
-            font-size: 20px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        body.light-mode .sun-icon {
-            display: inline-block;
-        }
-
-        body.dark-mode .sun-icon {
-            display: none;
-        }
-
-        body.dark-mode .moon-icon {
-            display: inline-block;
-        }
-
-        body.light-mode .moon-icon {
-            display: none;
-        }
-
-        .description {
-            margin-top: 30px;
-            font-size: 1.2em;
-            line-height: 1.8;
-            max-width: 700px;
-            margin: 30px auto;
-        }
-
-        .description h2 {
-            font-size: 2em;
-            color: #6d28d9;
+        .theme__icon:hover {
+            background-color: #e68900;
+            transform: scale(1.1);
         }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>Добро пожаловать в наш магазин!</h1>
+        <h1>Добро пожаловать в наш магазин</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Главная</a></li>
@@ -114,27 +97,35 @@
             </ul>
         </nav>
     </header>
-    
+
     <main>
         <section class="description">
             <h2>О нашем магазине</h2>
-            <p>Мы — интернет-магазин, который предлагает вам стильную и качественную одежду. Мы гордимся тем, что наш ассортимент включает только лучшие товары, которые соответствуют последним трендам. Мы уделяем внимание каждому клиенту, обеспечиваем быструю доставку и приятные условия для покупок.</p>
-            <p>В нашем каталоге вы найдёте как базовые вещи для повседневного гардероба, так и уникальные модные новинки, которые подойдут для особых случаев. Мы уверены, что каждый найдет у нас то, что ему нужно!</p>
+            <p>Мы — интернет-магазин, который предлагает вам стильную и качественную одежду. Мы гордимся тем, что наш
+                ассортимент включает только лучшие товары, которые соответствуют последним трендам.</p>
+            <p>В нашем каталоге вы найдёте как базовые вещи для повседневного гардероба, так и уникальные модные
+                новинки.</p>
         </section>
     </main>
-    
- 
-    <button class="theme__icon">
-        <span class="sun-icon">&#9728;</span>
-        <span class="moon-icon">&#127769;</span>
-    </button>
+
+    <button class="theme__icon" id="theme-toggle-icon">🌙</button>
 
     <script>
         const themeToggleBtn = document.querySelector('.theme__icon');
+
+        function updateThemeIcon() {
+            if (document.body.classList.contains("dark-mode")) {
+                themeToggleBtn.textContent = "☀️";
+            } else {
+                themeToggleBtn.textContent = "🌙";
+            }
+        }
+
         themeToggleBtn.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             document.body.classList.toggle('light-mode');
             localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+            updateThemeIcon();
         });
 
         if (localStorage.getItem("theme") === "dark") {
@@ -144,6 +135,9 @@
             document.body.classList.add("light-mode");
             document.body.classList.remove("dark-mode");
         }
+
+        updateThemeIcon();
     </script>
 </body>
+
 </html>
