@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cartItemsContainer.innerHTML = ""; // Очистим содержимое корзины на странице
+        cartItemsContainer.innerHTML = ""; 
         let totalPrice = 0;
         let tax = 0;
 
@@ -45,35 +45,35 @@ document.addEventListener("DOMContentLoaded", function () {
         if (taxPriceElement) taxPriceElement.textContent = tax.toFixed(2);
         if (finalPriceElement) finalPriceElement.textContent = finalPrice.toFixed(2);
 
-        // Сохраняем актуальную корзину в localStorage
+       
         localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    // Обработчик для кнопки "Подтвердить оплату"
+    
     document.getElementById("confirm-payment").addEventListener("click", function () {
-        // Очистить корзину в localStorage
+        
         localStorage.removeItem("cart");
 
-        // Обновляем корзину на странице
+       
         updateCart();
 
-        // Скрываем форму оплаты и показываем сообщение об успешной оплате
+ 
         document.getElementById("card-form").style.display = "none";
         document.getElementById("successMessage").style.display = "block";
     });
 
-    // Обработчик для удаления товара из корзины
+   
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("remove-btn")) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             const index = event.target.getAttribute("data-index");
             cart.splice(index, 1);
             localStorage.setItem("cart", JSON.stringify(cart));
-            updateCart(); // Обновляем корзину после удаления товара
+            updateCart(); 
         }
     });
 
-    // Обработчик для кнопки оформления заказа
+    
     const checkoutBtn = document.getElementById("checkout-btn");
     const orderForm = document.getElementById("order-form");
     const cartSection = document.querySelector(".cart");
@@ -83,6 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (orderForm) orderForm.classList.remove("hidden");
     });
 
-    // Вызов функции для отображения корзины при загрузке страницы
+    
     updateCart();
 });
