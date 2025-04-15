@@ -4,63 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина</title>
+    <title>Кошик</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
-        <h1>Корзина</h1>
+        <h1>Кошик</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Главная</a></li>
+                <li><a href="index.html">Головна</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="cart.html">Кошик</a></li>
             </ul>
         </nav>
     </header>
 
     <main style="margin-top: 140px;">
         <section class="cart">
-            <h2>Ваши товары</h2>
+            <h2>Ваші товари</h2>
             <div id="cart-items"></div>
-            <p class="total">Итого: <span id="total-price"></span> грн.</p>
-            <button class="checkout-btn" id="checkout-btn">Оформить заказ</button>
+            <p class="total">Разом: <span id="total-price"></span> грн.</p>
+            <button class="checkout-btn" id="checkout-btn">Оформити замовлення</button>
         </section>
 
         <section class="order-form hidden" id="order-form">
             <form class="form">
                 <label for="name" class="label">
-                    <span class="title">ФИО</span>
-                    <input class="input-field" type="text" name="name" placeholder="Введите ваше ФИО" required />
+                    <span class="title">ПІБ</span>
+                    <input class="input-field" type="text" name="name" placeholder="Введіть ваше ПІБ" required />
                 </label>
                 <label for="email" class="label">
-                    <span class="title">Email</span>
-                    <input class="input-field" type="email" name="email" placeholder="Введите ваш email" required />
+                    <span class="title">пошта</span>
+                    <input class="input-field" type="email" name="email" placeholder="Введіть Ваш email" required />
                 </label>
                 <label for="phone" class="label">
                     <span class="title">Телефон</span>
-                    <input class="input-field" type="tel" name="phone" placeholder="Введите ваш телефон" required />
+                    <input class="input-field" type="tel" name="phone" placeholder="Введіть Ваш телефон" required />
                 </label>
-                <input class="checkout-btn" type="button" value="Подтвердить заказ" id="confirm-order" />
+                <input class="checkout-btn" type="button" value="Підтвердити замовлення" id="confirm-order" />
             </form>
         </section>
 
         <section class="add-card page hidden" id="card-form">
             <form class="form">
                 <label for="name" class="label">
-                    <span class="title">Card holder full name</span>
+                    <span class="title">ПІБ власника картки</span>
                     <input class="input-field" type="text" name="input-name" placeholder="Enter your full name"
                         required />
                 </label>
                 <label for="serialCardNumber" class="label">
-                    <span class="title">Card Number</span>
+                    <span class="title">Номер картки</span>
                     <input id="serialCardNumber" class="input-field" type="number" placeholder="0000 0000 0000 0000"
                         required />
                 </label>
                 <div class="split">
                     <label for="ExDate" class="label">
-                        <span class="title">Expiry Date</span>
+                        <span class="title">Термін придатності</span>
                         <input id="ExDate" class="input-field" type="text" placeholder="01/23" required />
                     </label>
                     <label for="cvv" class="label">
@@ -73,9 +73,9 @@
         </section>
 
         <section id="successMessage" style="display: none; margin-top: 40px;">
-            <h2>Успешная оплата, мы с вами свяжемся!</h2>
-            <p>Спасибо за заказ!</p>
-            <button class="checkout-btn" id="clear-cart-btn">Вернуться в каталог</button>
+            <h2>Успішна оплата, ми зв'яжемося з вами!</h2>
+            <p>Дякую за замовлення!</p>
+            <button class="checkout-btn" id="clear-cart-btn">Повернутись до каталогу</button>
         </section>
     </main>
 
@@ -147,7 +147,7 @@
                     document.getElementById("order-form").classList.add("hidden");
                     document.getElementById("successMessage").style.display = "block";
                 } else {
-                    alert("Пожалуйста, заполните все поля формы.");
+                    alert("Будь ласка, заповніть усі поля форми.");
                 }
             });
 
