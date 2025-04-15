@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const finalPriceElement = document.getElementById("final-price");
 
         if (!cartItemsContainer || !totalPriceElement) {
-            console.error("Ошибка: не найдены элементы корзины.");
+            console.error("Помилка: елементи кошика не знайдені.");
             return;
         }
 
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let tax = 0;
 
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = "<p>Корзина пуста.</p>";
+            cartItemsContainer.innerHTML = "<p>Кошик порожній.</p>";
             totalPriceElement.textContent = "0";
             if (subtotalPriceElement) subtotalPriceElement.textContent = "0";
             if (taxPriceElement) taxPriceElement.textContent = "0";
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             itemElement.classList.add("cart-item");
             itemElement.innerHTML = `
                 <p>${item.name} - ${item.price} грн.</p>
-                <button class="remove-btn" data-index="${index}">Удалить</button>
+                <button class="remove-btn" data-index="${index}">Видалити</button>
             `;
             cartItemsContainer.appendChild(itemElement);
             totalPrice += parseFloat(item.price);
